@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exec AI | Transforme IA em Resultados</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .hero-pattern {
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .fade-in { animation: fadeIn 0.3s ease-in-out forwards; }
+        .slide-up { animation: slideUp 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .section-view { display: none; }
+        .section-view.active { display: block; }
+        .typewriter { overflow: hidden; white-space: pre-wrap; border-right: 2px solid #2563eb; animation: blink-caret .75s step-end infinite; }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #2563eb; } }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        corporate: { 900: '#0f172a', 800: '#1e293b', 700: '#334155', 100: '#f1f5f9' },
+                        primary: { 700: '#1d4ed8', 600: '#2563eb', 500: '#3b82f6', 100: '#dbeafe', 50: '#eff6ff' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-corporate-900 antialiased selection:bg-primary-100 selection:text-primary-600 flex h-screen overflow-hidden">
+
+    <!-- Menu Lateral Fixo -->
+    <aside class="w-64 bg-corporate-900 text-white flex flex-col h-full shadow-2xl z-20 flex-shrink-0 border-r border-corporate-800">
+        <div class="p-6 border-b border-corporate-800 flex items-center gap-3 cursor-pointer" onclick="navigate('dashboard')">
+            <div class="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary-500/30">
+                E
+            </div>
+            <div>
+                <span class="font-extrabold text-xl tracking-tight">Exec <span class="text-primary-500">AI</span></span>
+                <span class="block text-[10px] text-slate-400 font-mono">SaaS Executivo</span>
+            </div>
+        </div>
+        
+        <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto">
+            <button onclick="navigate('dashboard')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-slate-300 hover:bg-corporate-800 hover:text-white transition font-medium text-sm" data-target="dashboard">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Início
+            </button>
+            <button onclick="navigate('diagnostico')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-slate-300 hover:bg-corporate-800 hover:text-white transition font-medium text-sm" data-target="diagnostico">
+                <i data-lucide="clipboard-check" class="w-4 h-4"></i> Diagnóstico (12 Perguntas)
+            </button>
+            <button onclick="navigate('trilhas')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-slate-300 hover:bg-corporate-800 hover:text-white transition font-medium text-sm" data-target="trilhas">
+                <i data-lucide="git-branch" class="w-4 h-4"></i> Trilhas & Playbooks
+            </button>
+            <button onclick="navigate('roi')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-slate-300 hover:bg-corporate-800 hover:text-white transition font-medium text-sm" data-target="roi">
+                <i data-lucide="gauge" class="w-4 h-4"></i> Dashboard de ROI
+            </button>
+            <button onclick="navigate('biblioteca')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-slate-300 hover:bg-corporate-800 hover:text-white transition font-medium text-sm" data-target="biblioteca">
+                <i data-lucide="library" class="w-4 h-4"></i> Biblioteca Curada
+            </button>
+            <button onclick="navigate('pilulas')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-slate-300 hover:bg-corporate-800 hover:text-white transition font-medium text-sm" data-target="pilulas">
+                <i data-lucide="zap" class="w-4 h-4"></i> Pílulas (5-10 min)
+            </button>
+        </nav>
+        
+        <div class="p-4 border-t border-corporate-800 text-xs text-slate-400 flex items-center justify-between">
+            <span>FIAP Tech Challenge 3</span>
+            <span class="bg-primary-500/20 text-primary-300 px-2 py-0.5 rounded text-[10px] font-mono">v2.0 UI/UX</span>
+        </div>
+    </aside>
+
+    <!-- Área de Conteúdo Principal -->
+    <main class="flex-1 h-full overflow-y-auto relative bg-slate-50 flex flex-col">
+        
+        <!-- Barra de Navegação Superior (Glass Card) -->
+        <header class="glass-card border-b border-slate-200 px-8 py-4 flex justify-between items-center sticky top-0 z-10 shadow-sm">
+            <div>
+                <h2 class="text-xl font-bold text-slate-800" id="header-title">Visão Geral</h2>
+                <p class="text-xs text-slate-500" id="header-subtitle">Programa Estratégico de Aprendizagem e ROI</p>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button onclick="reiniciarTeste()" class="flex items-center gap-2 bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs font-semibold px-3.5 py-2 rounded-xl border border-slate-200 transition">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                    <span>Reiniciar Teste</span>
+                </button>
+                
+                <div class="flex items-center gap-3 pl-4 border-l border-slate-200">
+                    <div class="text-right">
+                        <div class="text-sm font-semibold text-slate-800">Liderança Executiva</div>
+                        <div class="text-[11px] text-slate-400">PME • Ambiente Piloto</div>
+                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-corporate-900 text-white flex items-center justify-center font-bold text-xs shadow">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-8 max-w-7xl mx-auto w-full flex-1">
+            
+            <!-- SECÇÃO 0: INÍCIO (HERO & VISÃO GERAL) -->
+            <section id="view-dashboard" class="section-view active">
+                <div class="hero-pattern border border-slate-200 rounded-3xl p-10 md:p-14 mb-8 bg-white shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-primary-500/10 blur-[100px] rounded-full -z-10"></div>
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-100 text-primary-700 font-semibold text-xs mb-4">
+                            <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Motor de Reskilling e Aplicação Executiva
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4 leading-tight">
+                            Líderes falham com IA por falta de <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-teal-500">método</span>, não por tecnologia.
+                        </h1>
+                        <p class="text-slate-600 text-base leading-relaxed mb-8">
+                            Apenas 6% das empresas capturam valor escalável com IA. A Exec AI traduz repertório tecnológico em decisões gerenciais, playbooks de 30 dias e indicadores financeiros comprováveis.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="navigate('diagnostico')" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold text-sm px-6 py-3.5 rounded-xl shadow-lg shadow-primary-500/20 transition flex items-center gap-2">
+                                <span>Iniciar Diagnóstico de 12 Perguntas</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="navigate('roi')" class="bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm px-6 py-3.5 rounded-xl border border-slate-200 transition flex items-center gap-2">
+                                <i data-lucide="bar-chart-2" class="w-4 h-4 text-primary-600"></i>
+                                <span>Ver Cockpit de ROI</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fontes de Confiança Globais -->
+                <div class="border border-slate-200 bg-white rounded-2xl p-6 mb-8 text-center shadow-sm">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Metodologia e Curadoria Baseadas nas Maiores Fontes Mundiais</p>
+                    <div class="flex flex-wrap justify-center items-center gap-x-10 gap-y-4 opacity-70 grayscale hover:grayscale-0 transition-all text-sm font-extrabold text-slate-700">
+                        <span>McKinsey</span><span>PwC</span><span>Gartner</span><span>MIT Tech Review</span><span>Harvard Business Review</span><span>Deloitte</span>
+                    </div>
+                </div>
+
+                <!-- Cards com Destaques das Funcionalidades -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-primary-600 flex items-center justify-center mb-4">
+                            <i data-lucide="layers" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-base mb-1">Diagnóstico em 3 Etapas</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Mapeamento em 12 pontos estratégicos sem fricção técnica, gerando trilhas direcionadas ao setor da empresa.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                            <i data-lucide="workflow" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-base mb-1">Playbooks de Execução</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Guias semanais passo a passo com papéis, checklists e barreiras contra alucinação de dados e não conformidade LGPD.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
+                            <i data-lucide="calculator" class="w-5 h-5"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-base mb-1">Governança & ROI Auditável</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Fórmula inspirada no Gartner que conecta tempo poupado com economia financeira acumulada e donos internos.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECÇÃO 1: DIAGNÓSTICO DE MATURIDADE (STEPPER WIZARD COM 12 PERGUNTAS) -->
+            <section id="view-diagnostico" class="section-view">
+                
+                <!-- Caixa de Diagnóstico (Stepper) -->
+                <div id="box-diagnostico-stepper" class="max-w-3xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden slide-up">
+                    <div class="w-full bg-slate-100 h-2">
+                        <div id="stepper-progress-bar" class="bg-primary-600 h-2 transition-all duration-500" style="width: 33%"></div>
+                    </div>
+
+                    <div class="p-8 md:p-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <span id="step-badge" class="bg-primary-100 text-primary-700 text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">
+                                Etapa 1 de 3: Contexto & Empresa
+                            </span>
+                            <span id="step-indicator" class="text-xs font-medium text-slate-400">Perguntas 1 a 4 de 12</span>
+                        </div>
+                        <h3 id="step-title" class="text-2xl font-bold text-slate-900 mb-2">Contextualização Organizacional</h3>
+                        <p id="step-desc" class="text-xs text-slate-500 mb-8">Defina os parâmetros centrais da sua operação para calibrar o volume de investimento e maturidade esperada.</p>
+
+                        <!-- Formulário Dinâmico em 3 Fases -->
+                        <div id="step-content-area" class="space-y-5">
+                            <!-- Injetado dinamicamente via JS -->
+                        </div>
+
+                        <!-- Botões de Navegação do Stepper -->
+                        <div class="mt-8 pt-6 border-t border-slate-100 flex justify-between items-center">
+                            <button type="button" id="btn-voltar-step" onclick="voltarStep()" class="text-slate-500 hover:text-slate-800 text-xs font-semibold px-4 py-2.5 rounded-lg transition hidden flex items-center gap-1">
+                                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Voltar
+                            </button>
+                            <div class="ml-auto">
+                                <button type="button" id="btn-avancar-step" onclick="avancarStep()" class="bg-corporate-900 hover:bg-corporate-800 text-white text-xs font-bold py-3 px-8 rounded-xl transition shadow flex items-center gap-2">
+                                    <span>Próxima Etapa</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consola do Motor de IA (Efeito Typewriter) -->
+                <div id="box-diagnostico-terminal" class="max-w-3xl mx-auto hidden slide-up">
+                    <div class="bg-corporate-900 rounded-2xl shadow-2xl overflow-hidden border border-corporate-800">
+                        <div class="bg-corporate-800 px-4 py-3 flex items-center justify-between border-b border-corporate-700">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                                <span class="text-slate-400 text-xs font-mono ml-2">ExecAI_Engine_v3.0.sh</span>
+                            </div>
+                            <span class="text-[10px] text-emerald-400 font-mono">Processamento Algorítmico</span>
+                        </div>
+                        <div class="p-8 font-mono text-xs leading-relaxed text-emerald-400">
+                            <div id="terminal-typing-text" class="typewriter inline-block"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECÇÃO 2: TRILHAS E PLAYBOOKS -->
+            <section id="view-trilhas" class="section-view">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-primary-600 uppercase tracking-wider">Funcionalidades 1 & 2 • MVP</span>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-semibold px-2 py-0.5 rounded">Trilha Calibrada</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900">Trilha Personalizada & Playbooks de 30 Dias</h3>
+                        <p class="text-slate-500 text-sm">Estruturada a partir do seu diagnóstico com links diretos para referências de mercado.</p>
+                    </div>
+                </div>
+
+                <!-- 4 Módulos da Trilha -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+                    <div onclick="window.open('https://www.mckinsey.com.br/our-insights/all-insights/65-das-empresas-usam-gen-ai-no-mundo', '_blank')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-lg hover:border-primary-400 transition group flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center text-xs text-primary-600 font-bold uppercase mb-2">
+                                <span>Módulo 1</span>
+                                <i data-lucide="external-link" class="w-4 h-4 text-slate-400 group-hover:text-primary-600 transition"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Fundamentos de Gen AI para Líderes</h4>
+                            <p class="text-xs text-slate-500 mb-3">Como capturar valor além do hype e desenhar roadmaps executivos.</p>
+                        </div>
+                        <span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-medium self-start">Fonte: McKinsey Brasil</span>
+                    </div>
+
+                    <div onclick="window.open('https://www.youtube.com/watch?v=To7Ku93P8MA', '_blank')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-lg hover:border-primary-400 transition group flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center text-xs text-indigo-600 font-bold uppercase mb-2">
+                                <span>Módulo 2</span>
+                                <i data-lucide="external-link" class="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Governança, LGPD e Dados Internos</h4>
+                            <p class="text-xs text-slate-500 mb-3">Mitigação de riscos jurídicos, vazamento e alinhamento do comitê.</p>
+                        </div>
+                        <span class="text-[11px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded font-medium self-start">Fonte: FIAP Meetup</span>
+                    </div>
+
+                    <div onclick="window.open('https://mittechreview.com.br/', '_blank')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-lg hover:border-primary-400 transition group flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center text-xs text-emerald-600 font-bold uppercase mb-2">
+                                <span>Módulo 3</span>
+                                <i data-lucide="external-link" class="w-4 h-4 text-slate-400 group-hover:text-emerald-600 transition"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Seleção de Ferramentas SaaS</h4>
+                            <p class="text-xs text-slate-500 mb-3">Critérios pragmáticos para escolher soluções de prateleira vs. API.</p>
+                        </div>
+                        <span class="text-[11px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-medium self-start">Fonte: MIT Tech Review</span>
+                    </div>
+
+                    <div onclick="window.open('https://www.gartner.com/en/articles/ai-value-metrics', '_blank')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-lg hover:border-primary-400 transition group flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center text-xs text-amber-600 font-bold uppercase mb-2">
+                                <span>Módulo 4</span>
+                                <i data-lucide="external-link" class="w-4 h-4 text-slate-400 group-hover:text-amber-600 transition"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Métricas de Valor e Defesa de ROI</h4>
+                            <p class="text-xs text-slate-500 mb-3">Como apresentar resultados ao Conselho de Administração e medir payback.</p>
+                        </div>
+                        <span class="text-[11px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-medium self-start">Fonte: Gartner Executive</span>
+                    </div>
+                </div>
+
+                <!-- Playbooks de Implementação -->
+                <div class="border-t border-slate-200 pt-8">
+                    <h4 class="text-lg font-bold text-slate-900 mb-1">Playbooks de Implementação Prática (Sprints de 30 Dias)</h4>
+                    <p class="text-xs text-slate-500 mb-6">Roteiros operacionais com etapas, papéis, templates e gestão de riscos acionáveis.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition cursor-pointer group" onclick="openModal('modal-playbook')">
+                            <div class="h-2 bg-gradient-to-r from-primary-600 to-indigo-600 w-full"></div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h5 class="text-base font-bold text-slate-900 group-hover:text-primary-600 transition">Playbook: IA em Atendimento ao Cliente em 30 Dias</h5>
+                                    <span class="bg-primary-50 text-primary-700 text-xs px-2.5 py-1 rounded-md font-semibold border border-primary-200">Recomendado</span>
+                                </div>
+                                <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                                    Reduza em 35% o transbordo para analistas humanos através de triagem via agentes com barreira semântica de FAQ homologado.
+                                </p>
+                                <div class="flex items-center justify-between text-xs pt-3 border-t border-slate-100">
+                                    <span class="text-slate-500 font-medium flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Duração: 4 semanas</span>
+                                    <span class="text-primary-600 font-bold group-hover:underline flex items-center gap-1">Abrir Roteiro Completo <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden p-6 opacity-75 hover:opacity-100 transition flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-2">
+                                    <h5 class="text-base font-bold text-slate-800">Playbook: Conciliação Fiscal Automatizada via OCR</h5>
+                                    <span class="bg-slate-100 text-slate-600 text-xs px-2.5 py-1 rounded-md font-semibold">Ciclo Seguinte</span>
+                                </div>
+                                <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                                    Extração e leitura inteligente de faturas para reduzir multas e acelerar conciliação bancária na Controladoria.
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between text-xs pt-3 border-t border-slate-100 text-slate-400">
+                                <span class="flex items-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5"></i> Desbloqueia após conclusão do Módulo 3</span>
+                                <span>Estimado: 20 dias</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECÇÃO 3: DASHBOARD DE ROI & GOVERNANÇA -->
+            <section id="view-roi" class="section-view">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-primary-600 uppercase tracking-wider">Funcionalidade 3 • MVP</span>
+                            <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-mono">Framework Gartner & McKinsey</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900">Cockpit de ROI, Aprendizagem e Projetos</h3>
+                        <p class="text-slate-500 text-xs">Acompanhamento consolidado para reporte à Diretoria com métricas auditáveis.</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="simularAvancoEtapa()" class="bg-primary-600 hover:bg-primary-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow transition flex items-center gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                            <span>Simular Avanço de Etapa</span>
+                        </button>
+                        <button onclick="openModal('modal-metodologia-roi')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 border border-slate-200">
+                            <i data-lucide="help-circle" class="w-4 h-4 text-primary-600"></i>
+                            <span>Memória de Cálculo de ROI</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Painel de Indicadores de Impacto -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Maturidade em IA</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-extrabold text-slate-900" id="score-maturidade">74</span>
+                            <span class="text-sm text-slate-400">/100</span>
+                        </div>
+                        <div class="w-full bg-slate-100 h-1.5 rounded-full mt-3 overflow-hidden">
+                            <div id="bar-maturidade" class="bg-primary-600 h-full rounded-full transition-all duration-500" style="width: 74%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Tempo Poupado</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-extrabold text-slate-900" id="val-tempo-horas">138</span>
+                            <span class="text-sm text-slate-400">h / mês</span>
+                        </div>
+                        <span class="text-[11px] text-emerald-600 font-semibold mt-3 flex items-center gap-1">
+                            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> +26h após triagem FAQ
+                        </span>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Economia Gerada</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-extrabold text-slate-900" id="val-economia-dinheiro">R$ 24.600</span>
+                        </div>
+                        <span class="text-[11px] text-slate-400 mt-3">Investimento inicial: R$ 8.000</span>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm bg-primary-50/50 flex flex-col justify-between">
+                        <span class="text-xs font-bold text-primary-700 uppercase tracking-wider block mb-1">ROI do Piloto (Gartner)</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-extrabold text-primary-700" id="val-roi-porcento">208%</span>
+                        </div>
+                        <span class="text-[11px] text-primary-600 font-semibold mt-3">Payback: 2,4 meses</span>
+                    </div>
+                </div>
+
+                <!-- Tabela de Projetos & Donos Internos -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm mb-6 overflow-hidden">
+                    <div class="p-5 border-b border-slate-100 flex justify-between items-center">
+                        <h4 class="font-bold text-slate-800 text-sm">Status e Atribuição de Projetos Internos</h4>
+                        <span class="text-xs text-slate-400">Elimina a dor de 58% dos projetos sem dono</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
+                                <tr>
+                                    <th class="p-4">Projeto & Escopo</th>
+                                    <th class="p-4">Área Responsável (Dono)</th>
+                                    <th class="p-4">Etapas Concluídas</th>
+                                    <th class="p-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="p-4">
+                                        <div class="font-bold text-slate-800">IA no Atendimento (Playbook 30 Dias)</div>
+                                        <div class="text-[11px] text-slate-400">SAC e Operações</div>
+                                    </td>
+                                    <td class="p-4 font-medium text-slate-700">Diretoria de Operações</td>
+                                    <td class="p-4 w-48">
+                                        <div class="flex justify-between font-semibold mb-1">
+                                            <span id="proj-texto">3 de 4 Semanas</span>
+                                            <span id="proj-percentual" class="text-primary-600">75%</span>
+                                        </div>
+                                        <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                                            <div id="proj-bar" class="bg-primary-600 h-full rounded-full transition-all duration-500" style="width: 75%"></div>
+                                        </div>
+                                    </td>
+                                    <td class="p-4">
+                                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-semibold px-2 py-0.5 rounded-full">Piloto Ativo</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4">
+                                        <div class="font-bold text-slate-800">Automação de Faturas e Leitura OCR</div>
+                                        <div class="text-[11px] text-slate-400">Contabilidade & Finanças</div>
+                                    </td>
+                                    <td class="p-4 font-medium text-slate-700">Controladoria</td>
+                                    <td class="p-4 w-48">
+                                        <div class="flex justify-between font-semibold mb-1">
+                                            <span>2 de 5 Etapas</span>
+                                            <span class="text-slate-500">40%</span>
+                                        </div>
+                                        <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                                            <div class="bg-slate-400 h-full rounded-full" style="width: 40%"></div>
+                                        </div>
+                                    </td>
+                                    <td class="p-4">
+                                        <span class="bg-slate-100 text-slate-600 text-[10px] font-semibold px-2 py-0.5 rounded-full">Em Andamento</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Gestão de Riscos e Governança com Resolução -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-sm">Governança, Riscos e Conformidade Regulatória</h4>
+                            <p class="text-xs text-slate-400">Diretrizes ativas para mitigar riscos de segurança e reputação.</p>
+                        </div>
+                        <span id="badge-alertas" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">2 Alertas Ativos</span>
+                    </div>
+
+                    <div class="space-y-3" id="lista-alertas">
+                        <div id="alerta-1" class="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl border border-rose-200 bg-rose-50/50 gap-3">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-500"></i>
+                                <span class="text-xs text-slate-700"><strong class="text-slate-900">LGPD:</strong> Base do FAQ de suporte contém CPFs em texto não anonimizado.</span>
+                            </div>
+                            <button onclick="resolverAlerta(1)" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition self-end sm:self-auto">
+                                Aplicar Anonimização
+                            </button>
+                        </div>
+                        <div id="alerta-2" class="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl border border-amber-200 bg-amber-50/50 gap-3">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="shield-alert" class="w-5 h-5 text-amber-500"></i>
+                                <span class="text-xs text-slate-700"><strong class="text-slate-900">Alucinação:</strong> Agente precisa de instrução formal de sistema para limitar escopo (Grounding).</span>
+                            </div>
+                            <button onclick="resolverAlerta(2)" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition self-end sm:self-auto">
+                                Travar Prompt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECÇÃO 4: BIBLIOTECA CURADA (COM FILTROS DINÂMICOS DO MVP) -->
+            <section id="view-biblioteca" class="section-view">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-primary-600 uppercase tracking-wider">Funcionalidade 4 • MVP</span>
+                            <span class="bg-primary-50 text-primary-700 text-[10px] font-semibold px-2 py-0.5 rounded">Curadoria Especializada</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900">Biblioteca Curada por Setor, Função e Nível</h3>
+                        <p class="text-slate-500 text-sm">Casos reais e frameworks comprovados para capacitar lideranças de PMEs.</p>
+                    </div>
+                    <div class="text-xs font-medium text-slate-500 bg-white border border-slate-200 px-3.5 py-2 rounded-xl shadow-sm">
+                        <span id="contador-biblioteca" class="font-bold text-primary-600">9</span> conteúdos disponíveis
+                    </div>
+                </div>
+
+                <!-- Painel de Filtros Exatos do MVP -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 mb-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5 flex items-center gap-1">
+                                <i data-lucide="building" class="w-3.5 h-3.5 text-slate-400"></i> Setor
+                            </label>
+                            <select id="filtro-setor" onchange="aplicarFiltrosBiblioteca()" class="w-full border-slate-300 rounded-xl p-2.5 border text-sm font-medium focus:ring-2 focus:ring-primary-500">
+                                <option value="todos">Todos os Setores</option>
+                                <option value="varejo">Varejo & E-commerce</option>
+                                <option value="industria">Indústria & Manufatura</option>
+                                <option value="servicos">Serviços B2B</option>
+                                <option value="tecnologia">Tecnologia & SaaS</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5 flex items-center gap-1">
+                                <i data-lucide="briefcase" class="w-3.5 h-3.5 text-slate-400"></i> Função
+                            </label>
+                            <select id="filtro-funcao" onchange="aplicarFiltrosBiblioteca()" class="w-full border-slate-300 rounded-xl p-2.5 border text-sm font-medium focus:ring-2 focus:ring-primary-500">
+                                <option value="todas">Todas as Funções</option>
+                                <option value="operacoes">Operações & SAC</option>
+                                <option value="vendas">Vendas & Comercial</option>
+                                <option value="rh">Recursos Humanos (RH)</option>
+                                <option value="financeiro">Financeiro & Controladoria</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5 flex items-center gap-1">
+                                <i data-lucide="layers" class="w-3.5 h-3.5 text-slate-400"></i> Nível
+                            </label>
+                            <select id="filtro-nivel" onchange="aplicarFiltrosBiblioteca()" class="w-full border-slate-300 rounded-xl p-2.5 border text-sm font-medium focus:ring-2 focus:ring-primary-500">
+                                <option value="todos">Todos os Níveis</option>
+                                <option value="iniciante">Iniciante</option>
+                                <option value="intermediario">Intermediário</option>
+                                <option value="avancado">Avançado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs">
+                        <span class="text-slate-400">Filtragem instantânea no catálogo.</span>
+                        <button onclick="limparFiltrosBiblioteca()" class="text-primary-600 hover:text-primary-700 font-semibold flex items-center gap-1">
+                            <i data-lucide="filter-x" class="w-3.5 h-3.5"></i> Limpar Filtros
+                        </button>
+                    </div>
+                </div>
+
+                <div id="grid-biblioteca" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                
+                <div id="empty-state-biblioteca" class="hidden bg-white p-12 rounded-2xl border border-slate-200 text-center">
+                    <h4 class="font-bold text-slate-800 text-base mb-1">Nenhum conteúdo encontrado</h4>
+                    <p class="text-xs text-slate-500 mb-4">Altere os filtros acima para explorar outros materiais.</p>
+                    <button onclick="limparFiltrosBiblioteca()" class="bg-primary-600 text-white text-xs font-semibold px-4 py-2 rounded-xl">Ver todos os conteúdos</button>
+                </div>
+            </section>
+
+            <!-- SECÇÃO 5: PÍLULAS DE APRENDIZAGEM (MICROLEARNING NOS 4 FORMATOS) -->
+            <section id="view-pilulas" class="section-view">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-primary-600 uppercase tracking-wider">Funcionalidade 5 • MVP</span>
+                            <span class="bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-2 py-0.5 rounded">Microlearning</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900">Pílulas de Aprendizagem (5 a 10 min)</h3>
+                        <p class="text-slate-500 text-sm">Conteúdos objetivos em 4 formatos práticos para gestores com pouco tempo.</p>
+                    </div>
+
+                    <!-- Filtro por formato -->
+                    <div class="flex flex-wrap gap-1.5 bg-white p-1.5 rounded-xl border border-slate-200 text-xs shadow-sm">
+                        <button onclick="filtrarPilulas('todos')" class="filtro-pilula-btn px-3 py-1.5 rounded-lg font-semibold bg-corporate-900 text-white transition" data-tipo="todos">Todos</button>
+                        <button onclick="filtrarPilulas('video')" class="filtro-pilula-btn px-3 py-1.5 rounded-lg font-medium text-slate-600 hover:bg-slate-100 transition" data-tipo="video">Vídeos (3-5 min)</button>
+                        <button onclick="filtrarPilulas('artigo')" class="filtro-pilula-btn px-3 py-1.5 rounded-lg font-medium text-slate-600 hover:bg-slate-100 transition" data-tipo="artigo">Artigos (2-3 min)</button>
+                        <button onclick="filtrarPilulas('quiz')" class="filtro-pilula-btn px-3 py-1.5 rounded-lg font-medium text-slate-600 hover:bg-slate-100 transition" data-tipo="quiz">Quizzes (2 min)</button>
+                        <button onclick="filtrarPilulas('caso')" class="filtro-pilula-btn px-3 py-1.5 rounded-lg font-medium text-slate-600 hover:bg-slate-100 transition" data-tipo="caso">Casos (5 min)</button>
+                    </div>
+                </div>
+
+                <!-- Card de Destaque: Título Exato do Escopo do MVP -->
+                <div class="bg-gradient-to-r from-corporate-900 via-slate-900 to-primary-900 text-white rounded-3xl p-6 sm:p-8 mb-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-corporate-800">
+                    <div class="max-w-2xl">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="bg-rose-500 text-white text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-md">Vídeo em Destaque • 4 min</span>
+                            <span class="text-xs text-primary-200 font-medium">Exemplo Core Fase 2</span>
+                        </div>
+                        <h4 class="text-2xl font-extrabold mb-2 leading-tight">Como usar IA para reduzir custos em 3 passos</h4>
+                        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                            1º Mapeamento de tarefas manuais repetitivas; 2º Implementação de agente simples de triagem; 3º Medição diária de horas poupadas. Sem necessidade de equipa técnica prévia.
+                        </p>
+                        <div class="flex items-center gap-3 text-xs text-slate-400">
+                            <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> Para Diretores de Operações e CEOs</span>
+                            <span>•</span>
+                            <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Duração: 3m40s</span>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <a href="https://www.youtube.com/watch?v=g0jPisjzRsY" target="_blank" class="bg-white hover:bg-primary-50 text-corporate-900 font-bold px-6 py-3.5 rounded-xl shadow-lg transition flex items-center gap-2">
+                            <i data-lucide="play" class="w-4 h-4 text-rose-600"></i>
+                            <span>Assistir Vídeo (3-5 min)</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Grade das Pílulas nos 4 Formatos -->
+                <div id="grid-pilulas" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Formato Vídeo -->
+                    <div class="card-pilula bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition" data-tipo="video">
+                        <div class="p-5">
+                            <span class="bg-rose-50 text-rose-600 border border-rose-200 text-[10px] font-bold uppercase px-2 py-0.5 rounded flex items-center gap-1 w-max mb-3">
+                                <i data-lucide="video" class="w-3 h-3"></i> Vídeo • 4 min
+                            </span>
+                            <h4 class="font-bold text-slate-900 text-sm mb-2">Shadow AI: Como evitar fugas de dados confidenciais</h4>
+                            <p class="text-xs text-slate-500 mb-4">Os riscos de equipas colarem contratos em IAs públicas e como proteger a PME.</p>
+                        </div>
+                        <div class="p-4 border-t border-slate-100 bg-slate-50">
+                            <a href="https://www.youtube.com/watch?v=4Q2W5DHHviA" target="_blank" class="text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center justify-between">
+                                <span>Ver vídeo</span> <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Formato Artigo -->
+                    <div class="card-pilula bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition" data-tipo="artigo">
+                        <div class="p-5">
+                            <span class="bg-blue-50 text-primary-600 border border-blue-200 text-[10px] font-bold uppercase px-2 py-0.5 rounded flex items-center gap-1 w-max mb-3">
+                                <i data-lucide="file-text" class="w-3 h-3"></i> Artigo • 3 min
+                            </span>
+                            <h4 class="font-bold text-slate-900 text-sm mb-2">A Sequência na PME: Diagnóstico, Processo e Dado</h4>
+                            <p class="text-xs text-slate-500 mb-4">Por que comprar ferramentas antes de desenhar fluxos é a razão de 56% não verem retorno financeiro.</p>
+                        </div>
+                        <div class="p-4 border-t border-slate-100 bg-slate-50">
+                            <a href="https://ricamello.com.br/blog/inteligencia-artificial-para-pequenas-e-medias-empresas/" target="_blank" class="text-xs font-semibold text-primary-600 hover:text-primary-700 flex items-center justify-between">
+                                <span>Ler artigo</span> <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Formato Quiz Interativo -->
+                    <div class="card-pilula bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition" data-tipo="quiz">
+                        <div class="p-5">
+                            <span class="bg-purple-50 text-purple-600 border border-purple-200 text-[10px] font-bold uppercase px-2 py-0.5 rounded flex items-center gap-1 w-max mb-3">
+                                <i data-lucide="help-circle" class="w-3 h-3"></i> Quiz • 2 min
+                            </span>
+                            <h4 class="font-bold text-slate-900 text-sm mb-2">Quiz Rápido: Prontidão Operacional em IA</h4>
+                            <p class="text-xs text-slate-500 mb-4">Teste em 2 perguntas rápidas se o gargalo do negócio está na qualidade dos dados ou no processo.</p>
+                        </div>
+                        <div class="p-4 border-t border-slate-100 bg-slate-50">
+                            <button onclick="openModal('modal-quiz')" class="w-full text-xs font-semibold text-purple-600 hover:text-purple-700 flex items-center justify-between">
+                                <span>Responder Quiz</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Formato Estudo de Caso -->
+                    <div class="card-pilula bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition" data-tipo="caso">
+                        <div class="p-5">
+                            <span class="bg-emerald-50 text-emerald-600 border border-emerald-200 text-[10px] font-bold uppercase px-2 py-0.5 rounded flex items-center gap-1 w-max mb-3">
+                                <i data-lucide="briefcase" class="w-3 h-3"></i> Caso • 5 min
+                            </span>
+                            <h4 class="font-bold text-slate-900 text-sm mb-2">Como uma PME reduziu em 40% o tempo no SAC</h4>
+                            <p class="text-xs text-slate-500 mb-4">Implementação de triagem inteligente, investimento mensal e ROI medido em 30 dias.</p>
+                        </div>
+                        <div class="p-4 border-t border-slate-100 bg-slate-50">
+                            <button onclick="openModal('modal-caso')" class="w-full text-xs font-semibold text-emerald-600 hover:text-emerald-700 flex items-center justify-between">
+                                <span>Ler Estudo</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- MODAL 1: PLAYBOOK DETALHADO -->
+    <div id="modal-playbook" class="fixed inset-0 bg-corporate-900/60 z-50 items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('modal-playbook')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <span class="bg-primary-100 text-primary-800 text-xs px-2.5 py-1 rounded-md font-bold uppercase mb-2 inline-block">Playbook Estruturado #1</span>
+            <h3 class="text-2xl font-bold text-slate-900 mb-6">Implementar IA no Atendimento ao Cliente em 30 Dias</h3>
+            
+            <div class="space-y-6 text-xs text-slate-600">
+                <div>
+                    <h5 class="font-bold text-slate-900 mb-1 border-b border-slate-100 pb-1 flex items-center gap-2">
+                        <i data-lucide="target" class="w-4 h-4 text-primary-600"></i> Objetivo do Projeto
+                    </h5>
+                    <p class="leading-relaxed">Automatizar 35% do volume de chamados repetitivos sem intervenção humana e sem quebra de CSAT.</p>
+                </div>
+                <div>
+                    <h5 class="font-bold text-slate-900 mb-1 border-b border-slate-100 pb-1 flex items-center gap-2">
+                        <i data-lucide="users" class="w-4 h-4 text-primary-600"></i> Responsáveis e Papéis
+                    </h5>
+                    <p><strong>Dono do Projeto:</strong> Diretoria de Operações | <strong>Validação:</strong> Coordenação de Suporte</p>
+                </div>
+                <div>
+                    <h5 class="font-bold text-slate-900 mb-2 border-b border-slate-100 pb-1 flex items-center gap-2">
+                        <i data-lucide="check-square" class="w-4 h-4 text-primary-600"></i> Checklist Semanal de Execução
+                    </h5>
+                    <ul class="space-y-2">
+                        <li class="flex items-center gap-2"><input type="checkbox" checked class="rounded text-primary-600"> <span>Semana 1: Limpeza da base de 40 perguntas frequentes (FAQ).</span></li>
+                        <li class="flex items-center gap-2"><input type="checkbox" checked class="rounded text-primary-600"> <span>Semana 2: Parametrização do agente e bloqueio de respostas fora do escopo.</span></li>
+                        <li class="flex items-center gap-2"><input type="checkbox" checked class="rounded text-primary-600"> <span>Semana 3: Testes internos simulados com analistas.</span></li>
+                        <li class="flex items-center gap-2"><input type="checkbox" class="rounded text-primary-600"> <span>Semana 4: Rollout para 20% dos clientes e monitorização.</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-4 border-t border-slate-100 text-right">
+                <button onclick="closeModal('modal-playbook')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-5 py-2.5 rounded-xl transition">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: MEMÓRIA DE CÁLCULO DE ROI (GARTNER) -->
+    <div id="modal-metodologia-roi" class="fixed inset-0 bg-corporate-900/60 z-50 items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-8 shadow-2xl relative">
+            <button onclick="closeModal('modal-metodologia-roi')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="calculator" class="w-5 h-5 text-primary-600"></i>
+                <h3 class="text-xl font-bold text-slate-900">Como o ROI é Calculado na Exec AI</h3>
+            </div>
+            <p class="text-xs text-slate-500 mb-6">Metodologia auditável inspirada nas diretrizes do Gartner e McKinsey para reporte à Diretoria.</p>
+
+            <div class="space-y-4 text-xs text-slate-600">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <span class="font-bold text-slate-800 block mb-1">Fórmula de ROI:</span>
+                    <code class="text-primary-700 font-mono font-bold block bg-white p-2 rounded border border-slate-200 text-center">
+                        ROI (%) = [(Valor Gerado - Custo Investido) / Custo Investido] × 100
+                    </code>
+                </div>
+                <ul class="list-disc pl-5 space-y-1 text-slate-500">
+                    <li><strong>Valor Gerado (R$ 24.600):</strong> 138h poupadas/mês × R$ 45/hora de custo operacional interno + redução de transbordo no SAC.</li>
+                    <li><strong>Custo Investido (R$ 8.000):</strong> Assinatura da plataforma Exec AI SaaS + consumo de APIs e tempo de alinhamento gerencial.</li>
+                </ul>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 text-right">
+                <button onclick="closeModal('modal-metodologia-roi')" class="bg-primary-600 hover:bg-primary-700 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: QUIZ INTERATIVO (2 MIN) -->
+    <div id="modal-quiz" class="fixed inset-0 bg-corporate-900/60 z-50 items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-8 shadow-2xl relative">
+            <button onclick="closeModal('modal-quiz')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div id="quiz-pergunta-box">
+                <span class="bg-purple-100 text-purple-700 text-[10px] font-bold uppercase px-2 py-0.5 rounded mb-2 inline-block">Pílula Interativa • 2 min</span>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Quiz: Prontidão Operacional em IA</h3>
+                <p class="text-xs text-slate-500 mb-6">Responda para avaliar o próximo passo da sua equipa.</p>
+
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <p class="font-bold text-slate-800 mb-2">1. Os processos da sua área já estão mapeados antes de aplicar IA?</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+                                <input type="radio" name="qz1" value="sim" class="text-primary-600">
+                                <span>Sim, temos os procedimentos padronizados.</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+                                <input type="radio" name="qz1" value="nao" class="text-primary-600">
+                                <span>Não, cada colaborador executa à sua maneira.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="font-bold text-slate-800 mb-2">2. Existe um líder nominalmente responsável pelo projeto de IA?</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+                                <input type="radio" name="qz2" value="sim" class="text-primary-600">
+                                <span>Sim, há um dono interno a reportar métricas.</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+                                <input type="radio" name="qz2" value="nao" class="text-primary-600">
+                                <span>Não, os testes acontecem de forma isolada.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+                    <button onclick="avaliarQuiz()" class="bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition">
+                        Calcular Resultado
+                    </button>
+                </div>
+            </div>
+
+            <div id="quiz-resultado-box" class="hidden text-center py-4">
+                <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="award" class="w-6 h-6"></i>
+                </div>
+                <h4 class="text-lg font-bold text-slate-900 mb-1" id="quiz-score-titulo">Prontidão: 80%</h4>
+                <p class="text-xs text-slate-600 max-w-sm mx-auto mb-6" id="quiz-score-desc">
+                    A sua empresa reúne condições para executar um Playbook de 30 dias com alta previsibilidade.
+                </p>
+                <button onclick="resetQuiz()" class="bg-corporate-900 text-white text-xs font-semibold py-2 px-5 rounded-xl transition">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: ESTUDO DE CASO (5 MIN) -->
+    <div id="modal-caso" class="fixed inset-0 bg-corporate-900/60 z-50 items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('modal-caso')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase px-2 py-0.5 rounded mb-2 inline-block">Estudo de Caso • 5 min</span>
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Caso Real: Triagem Inteligente em PME de Serviços B2B</h3>
+
+            <div class="space-y-4 text-xs text-slate-600 leading-relaxed">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <strong class="text-slate-800 block mb-1">Cenário Inicial:</strong>
+                    1.200 pedidos de suporte por mês. 3 analistas dedicavam metade do dia a responder a 8 dúvidas idênticas de faturamento e status de entrega.
+                </div>
+                <div>
+                    <strong class="text-slate-800 block mb-1">Intervenção (Sprint de 30 Dias):</strong>
+                    Mapeamento das 25 dúvidas frequentes, aplicação de agente de triagem com escopo travado em WhatsApp e monitorização semanal.
+                </div>
+                <div class="grid grid-cols-3 gap-3 my-4">
+                    <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 text-center">
+                        <span class="text-xl font-bold text-emerald-700 block">40%</span>
+                        <span class="text-[10px] text-slate-500">Redução TMA</span>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-xl border border-blue-200 text-center">
+                        <span class="text-xl font-bold text-primary-700 block">R$ 250</span>
+                        <span class="text-[10px] text-slate-500">Custo SaaS/mês</span>
+                    </div>
+                    <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-200 text-center">
+                        <span class="text-xl font-bold text-indigo-700 block">35 dias</span>
+                        <span class="text-[10px] text-slate-500">Payback comprovado</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 text-right">
+                <button onclick="closeModal('modal-caso')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-5 py-2.5 rounded-xl transition">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT GERAL: LÓGICA DO STEPPER, TERMINAL, FILTROS E NAVEGAÇÃO -->
+    <script>
+        // Metadados dos títulos das páginas
+        const titles = { 
+            'dashboard': { title: 'Visão Geral', sub: 'Programa Estratégico de Aprendizagem e ROI' },
+            'diagnostico': { title: 'Diagnóstico de Maturidade', sub: 'Mapeamento executivo em 3 etapas' },
+            'trilhas': { title: 'Trilhas & Playbooks', sub: 'Capacitação prática com base em referências globais' },
+            'roi': { title: 'Dashboard de ROI & Projetos', sub: 'Indicadores financeiros e mitigação de riscos' },
+            'biblioteca': { title: 'Biblioteca Curada', sub: 'Filtros dinâmicos por setor, função e nível' },
+            'pilulas': { title: 'Pílulas de Aprendizagem', sub: 'Microlearning executivo nos 4 formatos do MVP' }
+        };
+
+        function navigate(targetId) {
+            document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById(`view-${targetId}`);
+            if (target) target.classList.add('active');
+            
+            if (titles[targetId]) {
+                document.getElementById('header-title').innerText = titles[targetId].title;
+                document.getElementById('header-subtitle').innerText = titles[targetId].sub;
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if(btn.dataset.target === targetId) {
+                    btn.classList.add('bg-corporate-800', 'text-white', 'border-l-4', 'border-primary-500');
+                    btn.classList.remove('text-slate-300');
+                } else {
+                    btn.classList.remove('bg-corporate-800', 'text-white', 'border-l-4', 'border-primary-500');
+                    btn.classList.add('text-slate-300');
+                }
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        function reiniciarTeste() {
+            if(confirm("Deseja limpar todos os dados simulados e reiniciar o teste com outro participante?")) {
+                location.reload();
+            }
+        }
+
+        function openModal(id) { 
+            const m = document.getElementById(id);
+            if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+        function closeModal(id) { 
+            const m = document.getElementById(id);
+            if (m) { m.classList.remove('flex'); m.classList.add('hidden'); }
+        }
+
+        // ==========================================
+        // LÓGICA DO STEPPER WIZARD (12 PERGUNTAS)
+        // ==========================================
+        const wizardSteps = [
+            {
+                badge: "Etapa 1 de 3: Contexto & Empresa",
+                indicator: "Perguntas 1 a 4 de 12",
+                title: "Contextualização da Operação",
+                desc: "Parâmetros centrais do negócio para calibrar o porte e os limites orçamentais.",
+                progress: "33%",
+                fields: [
+                    { label: "1. Setor de atuação", type: "select", options: ["Serviços B2B", "Varejo & E-commerce", "Indústria & Manufatura", "Tecnologia & SaaS"] },
+                    { label: "2. Porte da empresa (colaboradores)", type: "select", options: ["51 a 200 colaboradores", "Até 50 colaboradores", "Mais de 200 colaboradores"] },
+                    { label: "3. Faturação anual estimada", type: "select", options: ["R$ 16M a R$ 50M", "Até R$ 16M", "Mais de R$ 50M"] },
+                    { label: "4. Nível de maturidade digital", type: "select", options: ["Intermediário (Uso individual de IA, sem método)", "Iniciante (Processos manuais em planilhas)", "Avançado (Modelos integrados)"] }
+                ]
+            },
+            {
+                badge: "Etapa 2 de 3: Gargalos & Dados",
+                indicator: "Perguntas 5 a 8 de 12",
+                title: "Gargalos e Infraestrutura de Dados",
+                desc: "Avaliação da maturidade dos dados e ferramentas legadas para integração.",
+                progress: "66%",
+                fields: [
+                    { label: "5. Principal gargalo operacional a atacar", type: "select", options: ["Atendimento ao Cliente e SAC", "Processos Administrativos e Finanças", "Ciclo comercial e Vendas"] },
+                    { label: "6. Objetivo primário com IA", type: "select", options: ["Redução de Custos e ROI em 6 meses", "Velocidade na Tomada de Decisão", "Escala Operacional sem inflar folha"] },
+                    { label: "7. Estado atual dos dados organizacionais", type: "select", options: ["Dispersos em planilhas (Baixa estruturação)", "Centralizados em ERP/CRM sem governança", "Estruturados e auditados com APIs"] },
+                    { label: "8. Sistemas e ferramentas atuais", type: "input", val: "ERP Totvs/Omie + CRM Salesforce/HubSpot + Excel" }
+                ]
+            },
+            {
+                badge: "Etapa 3 de 3: Orçamento & Riscos",
+                indicator: "Perguntas 9 a 12 de 12",
+                title: "Governança, Tempo e Investimento",
+                desc: "Capacidade de dedicação da liderança e mitigação de riscos regulatórios.",
+                progress: "100%",
+                fields: [
+                    { label: "9. Orçamento alocado para IA", type: "select", options: ["Até 2% do orçamento anual (Modesto)", "Sem orçamento dedicado (Aprovação pontual)", "Mais de 5% com verba carimbada"] },
+                    { label: "10. Tempo semanal que a liderança pode dedicar", type: "select", options: ["1 a 2 horas (Necessidade de microlearning)", "3 a 4 horas", "Menos de 1 hora"] },
+                    { label: "11. Expectativa do Conselho para ROI", type: "select", options: ["Primeiros resultados em até 90 dias", "Em até 6 meses", "Longo prazo (1 ano+)"] },
+                    { label: "12. Maior receio ou risco percebido", type: "select", options: ["Investir e não comprovar ganho financeiro (ROI)", "Vazamento de dados corporativos (LGPD)", "Resistência das equipas internas"] }
+                ]
+            }
+        ];
+
+        let currentStepIndex = 0;
+
+        function renderStep() {
+            const step = wizardSteps[currentStepIndex];
+            document.getElementById('step-badge').innerText = step.badge;
+            document.getElementById('step-indicator').innerText = step.indicator;
+            document.getElementById('step-title').innerText = step.title;
+            document.getElementById('step-desc').innerText = step.desc;
+            document.getElementById('stepper-progress-bar').style.width = step.progress;
+
+            const btnVoltar = document.getElementById('btn-voltar-step');
+            if (currentStepIndex === 0) btnVoltar.classList.add('hidden');
+            else btnVoltar.classList.remove('hidden');
+
+            const btnAvancar = document.getElementById('btn-avancar-step');
+            if (currentStepIndex === wizardSteps.length - 1) {
+                btnAvancar.innerHTML = `<span>Processar Diagnóstico</span> <i data-lucide="cpu" class="w-4 h-4"></i>`;
+            } else {
+                btnAvancar.innerHTML = `<span>Próxima Etapa</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+            }
+
+            const area = document.getElementById('step-content-area');
+            area.innerHTML = '';
+
+            step.fields.forEach(f => {
+                const div = document.createElement('div');
+                div.className = "space-y-1.5";
+                let inputHtml = '';
+                if(f.type === 'select') {
+                    inputHtml = `<select class="w-full border-slate-300 rounded-xl p-3 border text-xs font-medium focus:ring-2 focus:ring-primary-500">${f.options.map(o => `<option>${o}</option>`).join('')}</select>`;
+                } else {
+                    inputHtml = `<input type="text" value="${f.val}" class="w-full border-slate-300 rounded-xl p-3 border text-xs font-medium focus:ring-2 focus:ring-primary-500">`;
+                }
+                div.innerHTML = `<label class="block text-xs font-bold text-slate-700">${f.label}</label>${inputHtml}`;
+                area.appendChild(div);
+            });
+
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        function avancarStep() {
+            if (currentStepIndex < wizardSteps.length - 1) {
+                currentStepIndex++;
+                renderStep();
+            } else {
+                executarTerminalAI();
+            }
+        }
+
+        function voltarStep() {
+            if (currentStepIndex > 0) {
+                currentStepIndex--;
+                renderStep();
+            }
+        }
+
+        // ==========================================
+        // TERMINAL DE PROCESSAMENTO DE IA
+        // ==========================================
+        function executarTerminalAI() {
+            document.getElementById('box-diagnostico-stepper').classList.add('hidden');
+            const terminal = document.getElementById('box-diagnostico-terminal');
+            terminal.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const logs = `> Inicializando ExecAI Engine v3.0...
+> Ingerindo dados das 12 variáveis de maturidade...
+> Setor detectado: Serviços B2B / Média Empresa.
+> Fricção principal: Atendimento ao Cliente e transbordo manual.
+> Score Inicial Calculado: 74/100 pontos de maturidade.
+> 
+> Diagnóstico Executivo Emitido:
+> "Gargalo da Escala identificado: A liderança possui intenção, mas falta governança para transformar investimento em EBITDA."
+> 
+> Calibração concluída! Trilha de 4 módulos e Playbook de 30 dias gerados com sucesso.
+> Redirecionando para Trilhas & Playbooks...`;
+
+            const terminalEl = document.getElementById('terminal-typing-text');
+            terminalEl.innerHTML = '';
+            let charIndex = 0;
+
+            function digitar() {
+                if (charIndex < logs.length) {
+                    terminalEl.innerHTML += logs.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(digitar, 10);
+                } else {
+                    terminalEl.classList.remove('typewriter');
+                    setTimeout(() => {
+                        navigate('trilhas');
+                    }, 1200);
+                }
+            }
+            digitar();
+        }
+
+        // ==========================================
+        // LÓGICA DO DASHBOARD DE ROI
+        // ==========================================
+        let etapaAvancada = false;
+        function simularAvancoEtapa() {
+            if(!etapaAvancada) {
+                document.getElementById('score-maturidade').innerText = '82';
+                document.getElementById('bar-maturidade').style.width = '82%';
+                document.getElementById('val-tempo-horas').innerText = '164';
+                document.getElementById('val-economia-dinheiro').innerText = 'R$ 31.200';
+                document.getElementById('val-roi-porcento').innerText = '290%';
+
+                document.getElementById('proj-texto').innerText = '4 de 4 Semanas (Concluído)';
+                document.getElementById('proj-percentual').innerText = '100%';
+                document.getElementById('proj-bar').style.width = '100%';
+                document.getElementById('proj-bar').classList.replace('bg-primary-600', 'bg-emerald-500');
+
+                etapaAvancada = true;
+                alert('Semana 4 concluída! O projeto de atendimento atingiu 100% e o índice de maturidade da empresa subiu para 82 pontos.');
+            } else {
+                alert('As etapas deste ciclo já foram simuladas.');
+            }
+        }
+
+        let alertasContador = 2;
+        function resolverAlerta(id) {
+            const al = document.getElementById(`alerta-${id}`);
+            if (al) {
+                al.style.display = 'none';
+                alertasContador--;
+                const badge = document.getElementById('badge-alertas');
+                if (alertasContador > 0) {
+                    badge.innerText = `${alertasContador} Alerta Ativo`;
+                } else {
+                    badge.innerText = '0 Alertas • Governança Conforme';
+                    badge.className = 'text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200';
+                    document.getElementById('lista-alertas').innerHTML = `
+                        <div class="p-3.5 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-800 text-xs flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+                            <span>Todos os riscos de governança e LGPD mapeados foram mitigados com sucesso!</span>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                }
+            }
+        }
+
+        // ==========================================
+        // DADOS E FILTRAGEM DA BIBLIOTECA
+        // ==========================================
+        const itensBiblioteca = [
+            { id: 1, titulo: "O Ponto Cego da Indústria na Corrida pela IA", tipo: "Relatório", setor: "industria", funcao: "operacoes", nivel: "avancado", resumo: "Por que investir em maquinário sem capacitar a liderança operacional trava o ganho de produtividade.", fonte: "McKinsey", url: "https://www.mckinsey.com.br/our-insights/all-insights/o-ponto-cego-da-industria-na-corrida-pela-ai" },
+            { id: 2, titulo: "IA Agêntica e Automação na Controladoria", tipo: "Estudo", setor: "servicos", funcao: "financeiro", nivel: "intermediario", resumo: "Como empresas de serviços automatizam conciliações e KYC com agentes autônomos supervisionados.", fonte: "PwC Brasil", url: "https://www.pwc.com.br/pt/estudos/setores-atividade/financeiro/2026/descobrindo-o-amanha.html" },
+            { id: 3, titulo: "Do Discurso à Operação: Casos Reais no Varejo", tipo: "Caso Real", setor: "varejo", funcao: "vendas", nivel: "iniciante", resumo: "Como redes de varejo saíram do purgatório de pilotos e integraram recomendações em canais de vendas.", fonte: "MIT Tech Review", url: "https://mittechreview.com.br/alem-dos-testes-como-as-empresas-brasileiras-estao-levando-a-ia-do-discurso-a-operacao/" },
+            { id: 4, titulo: "Agentes de IA e Triagem Cognitiva no RH", tipo: "Guia", setor: "tecnologia", funcao: "rh", nivel: "iniciante", resumo: "Aplicações de agentes de linguagem para onboarding, triagem de currículos e redução de turnover.", fonte: "IBM / HBR", url: "https://www.ibm.com/br-pt/think/topics/ai-in-hr" },
+            { id: 5, titulo: "Framework de Redução de TMA no Atendimento ao Cliente", tipo: "Framework", setor: "servicos", funcao: "operacoes", nivel: "intermediario", resumo: "Metodologia comprovada para automatizar chamados de suporte sem derrubar as métricas de CSAT.", fonte: "Gartner", url: "https://www.gartner.com/en/customer-service-support" },
+            { id: 6, titulo: "Automação e Conciliação Fiscal em PMEs", tipo: "Artigo", setor: "varejo", funcao: "financeiro", nivel: "avancado", resumo: "Uso de OCR inteligente e classificação automatizada de documentos fiscais para médias empresas.", fonte: "TOTVS Insights", url: "https://mittechreview.com.br/alem-dos-testes-como-as-empresas-brasileiras-estao-levando-a-ia-do-discurso-a-operacao/" },
+            { id: 7, titulo: "Qualificação Autônoma de Leads B2B em Vendas", tipo: "Estudo", setor: "tecnologia", funcao: "vendas", nivel: "intermediario", resumo: "Como times de tecnologia usam LLMs conectados a CRMs para encurtar ciclos comerciais.", fonte: "StartSe", url: "https://www.startse.com/artigos/mckinsey-so-11percent-das-empresas-chegam-a-reinvencao-com-ia/" },
+            { id: 8, titulo: "Reskilling e Redução de Resistência à IA na Indústria", tipo: "Pessoas", setor: "industria", funcao: "rh", nivel: "iniciante", resumo: "Estratégias para capacitar operadores de fábrica e vencer o medo de substituição tecnológica.", fonte: "Deloitte", url: "https://www.deloitte.com/dk/en/services/consulting/perspectives/2025-global-human-capital-trends.html" },
+            { id: 9, titulo: "Matriz de ROI e Alocação de Capital em IA para SaaS", tipo: "Template", setor: "tecnologia", funcao: "financeiro", nivel: "avancado", resumo: "Critérios financeiros para decidir entre contratar soluções de prateleira (Take) ou desenvolver internamente.", fonte: "HBR", url: "https://hbr.org/search?term=artificial+intelligence+roi" }
+        ];
+
+        function renderizarBiblioteca(lista) {
+            const container = document.getElementById('grid-biblioteca');
+            const emptyState = document.getElementById('empty-state-biblioteca');
+            const contador = document.getElementById('contador-biblioteca');
+            
+            contador.innerText = lista.length;
+            container.innerHTML = '';
+
+            if (lista.length === 0) {
+                container.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            lista.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-2.5">
+                            <span class="text-[10px] font-bold text-primary-600 uppercase bg-primary-50 px-2 py-0.5 rounded border border-primary-100">${item.tipo}</span>
+                            <span class="text-[10px] font-medium text-slate-500 uppercase bg-slate-100 px-2 py-0.5 rounded">${item.nivel}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-1.5 text-sm leading-snug">${item.titulo}</h4>
+                        <p class="text-xs text-slate-500 mb-4 leading-relaxed">${item.resumo}</p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-xs">
+                        <span class="text-[11px] text-slate-400 font-medium">${item.fonte}</span>
+                        <a href="${item.url}" target="_blank" class="font-semibold text-primary-600 hover:text-primary-700 flex items-center gap-1">
+                            Acessar <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        function aplicarFiltrosBiblioteca() {
+            const s = document.getElementById('filtro-setor').value;
+            const f = document.getElementById('filtro-funcao').value;
+            const n = document.getElementById('filtro-nivel').value;
+
+            const res = itensBiblioteca.filter(item => {
+                const mS = (s === 'todos' || item.setor === s);
+                const mF = (f === 'todas' || item.funcao === f);
+                const mN = (n === 'todos' || item.nivel === n);
+                return mS && mF && mN;
+            });
+            renderizarBiblioteca(res);
+        }
+
+        function limparFiltrosBiblioteca() {
+            document.getElementById('filtro-setor').value = 'todos';
+            document.getElementById('filtro-funcao').value = 'todas';
+            document.getElementById('filtro-nivel').value = 'todos';
+            renderizarBiblioteca(itensBiblioteca);
+        }
+
+        // ==========================================
+        // LÓGICA DAS PÍLULAS DE APRENDIZAGEM
+        // ==========================================
+        function filtrarPilulas(tipo) {
+            document.querySelectorAll('.filtro-pilula-btn').forEach(btn => {
+                if(btn.dataset.tipo === tipo) {
+                    btn.classList.add('bg-corporate-900', 'text-white');
+                    btn.classList.remove('text-slate-600', 'hover:bg-slate-100');
+                } else {
+                    btn.classList.remove('bg-corporate-900', 'text-white');
+                    btn.classList.add('text-slate-600', 'hover:bg-slate-100');
+                }
+            });
+
+            document.querySelectorAll('.card-pilula').forEach(card => {
+                if (tipo === 'todos' || card.dataset.tipo === tipo) card.style.display = 'flex';
+                else card.style.display = 'none';
+            });
+        }
+
+        function avaliarQuiz() {
+            const q1 = document.querySelector('input[name="qz1"]:checked');
+            const q2 = document.querySelector('input[name="qz2"]:checked');
+            if(!q1 || !q2) {
+                alert('Responda a ambas as perguntas para calcular o resultado.');
+                return;
+            }
+
+            let score = 40;
+            if(q1.value === 'sim') score += 30;
+            if(q2.value === 'sim') score += 30;
+
+            document.getElementById('quiz-pergunta-box').classList.add('hidden');
+            document.getElementById('quiz-resultado-box').classList.remove('hidden');
+            document.getElementById('quiz-score-titulo').innerText = `Prontidão Avaliada: ${score}%`;
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        function resetQuiz() {
+            closeModal('modal-quiz');
+            document.getElementById('quiz-pergunta-box').classList.remove('hidden');
+            document.getElementById('quiz-resultado-box').classList.add('hidden');
+            document.querySelectorAll('input[name="qz1"], input[name="qz2"]').forEach(i => i.checked = false);
+        }
+
+        // Inicialização Geral
+        window.onload = () => {
+            renderStep();
+            renderizarBiblioteca(itensBiblioteca);
+            navigate('dashboard');
+        };
+    </script>
+</body>
+</html>
